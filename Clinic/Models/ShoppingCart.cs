@@ -22,7 +22,7 @@ namespace Clinic.Models
         public static ShoppingCart GetCart(IServiceProvider services)
         {
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
-            
+
             var context = services.GetService<ApplicationDbContext>();
             string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
 

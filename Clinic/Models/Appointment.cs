@@ -10,11 +10,11 @@ namespace Clinic.Models
 
         public List<AppointmentLine> AppointmentLines { get; set; }
 
-        public string PatientId { get; set; }      
+        public string PatientId { get; set; }
         public string DoctorId { get; set; }
         public int DiagnosisId { get; set; }
-      
-        public decimal TotalSum { get; set; } 
+
+        public decimal TotalSum { get; set; }
         public DateTime AppointmentPlaced { get; set; }
 
         public Patient Patient { get; set; }
