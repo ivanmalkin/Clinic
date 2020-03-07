@@ -37,7 +37,7 @@ namespace Clinic.Repositories
                 if (service != null && dbEntry != null)
                 {
                     dbEntry.Name = service.Name;
-                    dbEntry.Category = service.Category;
+                    dbEntry.CategoryId = service.CategoryId;
                 }
             }
 

@@ -9,49 +9,49 @@ namespace Clinic.Controllers
 {
     public class AdminController : Controller
     {
-        private IDiagnosisRepository repository;
+        private IServiceRepository repository;
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public AdminController(IDiagnosisRepository repo)
+        public AdminController(IServiceRepository repo)
         {
             repository = repo;
         }
 
         [Authorize(Roles = "Admin, Doctor")]
-        public ViewResult Index() => View(repository.Diagnoses);
+        public ViewResult Index() => View(repository.Services);
 
         [Authorize(Roles = "Admin, Doctor")]
-        public ViewResult Edit(int diagnosisId) => View(repository.Diagnoses.FirstOrDefault(p => p.DiagnosisId == diagnosisId));
+        public ViewResult Edit(int serviceId) => View(repository.Services.FirstOrDefault(p => p.ServiceId == serviceId));
 
         [Authorize(Roles = "Admin, Doctor")]
         [HttpPost]
-        public IActionResult Edit(Diagnosis diagnosis)
+        public IActionResult Edit(Service service)
         {
             if (ModelState.IsValid)
             {
-                repository.SaveDiagnosis(diagnosis);
-                log.Info($"Диагноз {diagnosis.Name} отредактирован или создан.");
-                TempData["message"] = $"{diagnosis.Name} был сохранен";
+                repository.SaveService(service);
+                log.Info($"Диагноз {service.Name} отредактирован или создан.");
+                TempData["message"] = $"{service.Name} был сохранен";
                 return RedirectToAction("Index");
             }
             else
             {
-                return View(diagnosis);
+                return View(service);
             }
         }
 
         [Authorize(Roles = "Admin, Doctor")]
-        public ViewResult Create() => View("Edit", new Diagnosis());
+        public ViewResult Create() => View("Edit", new Service());
 
         [Authorize(Roles = "Admin, Doctor")]
         [HttpPost]
-        public IActionResult Delete(int diagnosisId)
+        public IActionResult Delete(int serviceId)
         {
-            Diagnosis deletedDiagnosis = repository.DeleteDiagnosis(diagnosisId);
-            log.Info($"Диагноз {deletedDiagnosis} удален.");
-            if (deletedDiagnosis != null)
+            Service deletedService = repository.DeleteService(serviceId);
+            log.Info($"Диагноз {deletedService} удален.");
+            if (deletedService != null)
             {
-                TempData["message"] = $"{deletedDiagnosis.Name} был удален";
+                TempData["message"] = $"{deletedService.Name} был удален";
             }
             return RedirectToAction("Index");
         }
