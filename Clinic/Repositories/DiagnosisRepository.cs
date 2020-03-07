@@ -38,7 +38,7 @@ namespace Clinic.Repositories
                 {
                     dbEntry.Name = diagnosis.Name;
                     dbEntry.Category = diagnosis.Category;
-                    dbEntry.Description = dbEntry.Description;
+                    dbEntry.Description = diagnosis.Description;
                 }
             }
 
