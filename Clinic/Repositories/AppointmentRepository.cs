@@ -1,4 +1,5 @@
 ﻿using Clinic.Database;
+using Clinic.Interfaces;
 using Clinic.Models;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -6,7 +7,7 @@ using System.Security.Claims;
 
 namespace Clinic.Repositories
 {
-    public class AppointmentRepository
+    public class AppointmentRepository : IAppointmentRepository
     {
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly ShoppingCart _shoppingCart;

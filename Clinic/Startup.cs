@@ -1,35 +1,83 @@
+using Clinic.Database;
+using Clinic.Identity;
+using Clinic.Interfaces;
+using Clinic.Models;
+using Clinic.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace Clinic
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public Startup(IConfiguration configuration) => Configuration = configuration;
+
+        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(Configuration["Data:Clinic:ConnectionString"]));
+
+            services.AddDbContext<ApplicationIdentityDbContext>(
+                options => options.UseSqlServer(Configuration["Data:ClinicIdentity:ConnectionString"]));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddTransient<IDiagnosisRepository, DiagnosisRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IAppointmentRepository, AppointmentRepository>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sp => ShoppingCart.GetCart(sp));
+
+            services.AddMvc(options => options.EnableEndpointRouting = false)
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            services.AddMemoryCache();
+            services.AddSession();
+            services.AddHttpContextAccessor();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseDeveloperExceptionPage();
+            app.UseStatusCodePages();
+            app.UseSession();
 
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.UseFileServer(new FileServerOptions()
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "node_modules")),
+                RequestPath = "/node_modules",
+                EnableDirectoryBrowsing = false
+            });
+
+            app.UseAuthentication();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                   name: "servicedetails",
+                   template: "Service/Details/{serviceId?}",
+                   defaults: new { Controller = "Service", action = "Details" });
+
+                routes.MapRoute(
+                    name: "categoryfilter",
+                    template: "Service/{action}/{category?}",
+                    defaults: new { Controller = "Service", action = "List" });
+
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{Id?}");
             });
         }
     }
