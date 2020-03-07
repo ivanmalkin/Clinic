@@ -2,15 +2,48 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Clinic.Interfaces;
+using Clinic.Models;
+using log4net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Clinic.Controllers
 {
     public class PrescriptionController : Controller
     {
-        public IActionResult Index()
+        private IPrescriptionRepository repository;
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        public PrescriptionController(IPrescriptionRepository repo)
         {
-            return View();
+            repository = repo;
         }
+
+        [Authorize(Roles = "Admin, Doctor")]
+        public ViewResult Index() => View(repository.Prescriptions);
+
+        [Authorize(Roles = "Admin, Doctor")]
+        public ViewResult Edit(int prescriptionId) => View(repository.Prescriptions.FirstOrDefault(p => p.PrescriptionId == prescriptionId));
+
+        [Authorize(Roles = "Admin, Doctor")]
+        [HttpPost]
+        public IActionResult Edit(Prescription prescription)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.SavePrescription(prescription);
+                log.Info($"Диагноз {prescription.PrescriptionId} отредактирован или создан.");
+                TempData["message"] = $"{prescription.PrescriptionId} был сохранен";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(prescription);
+            }
+        }
+
+        [Authorize(Roles = "Admin, Doctor")]
+        public ViewResult Create() => View("Edit", new Prescription());
     }
 }

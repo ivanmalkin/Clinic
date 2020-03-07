@@ -37,6 +37,7 @@ namespace Clinic
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IAppointmentRepository, AppointmentRepository>();
             services.AddTransient<IDiagnosisRepository, DiagnosisRepository>();
+            services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sp => ShoppingCart.GetCart(sp));
