@@ -6,7 +6,9 @@ namespace Clinic.Database
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+        }
 
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Diagnosis> Diagnoses { get; set; }

@@ -6,6 +6,11 @@ namespace Clinic.Database
 {
     public class ApplicationIdentityDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationIdentityDbContext(DbContextOptions<ApplicationIdentityDbContext> options) : base(options) { }
+        public ApplicationIdentityDbContext(DbContextOptions<ApplicationIdentityDbContext> options) : base(options)
+        {
+        }
+
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Patient> Patients { get; set; }
     }
 }
