@@ -33,10 +33,10 @@ namespace Clinic
                 .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<IDiagnosisRepository, DiagnosisRepository>();
+            services.AddTransient<IServiceRepository, ServiceRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IAppointmentRepository, AppointmentRepository>();
-            services.AddTransient<IServiceRepository, ServiceRepository>();
+            services.AddTransient<IDiagnosisRepository, DiagnosisRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sp => ShoppingCart.GetCart(sp));
@@ -79,7 +79,7 @@ namespace Clinic
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{Id?}");
-            });
+            });           
         }
     }
 }
