@@ -48,7 +48,7 @@ namespace Clinic.Controllers
         public IActionResult Delete(int diagnosisId)
         {
             Diagnosis deletedDiagnosis = repository.DeleteDiagnosis(diagnosisId);
-            log.Info($"Продукт {deletedDiagnosis} удален.");
+            log.Info($"Диагноз {deletedDiagnosis} удален.");
             if (deletedDiagnosis != null)
             {
                 TempData["message"] = $"{deletedDiagnosis.Name} был удален";
