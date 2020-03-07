@@ -32,13 +32,13 @@ namespace Clinic.Controllers
             }
             else
             {
-                if (string.Equals("Прием у врача", _category, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals("Прием у врача", _category))
                 {
-                    services = _serviceRepository.Services.Where(p => p.Category.Name.Equals("Прием у врача")).OrderBy(p => p.Name);
+                    services = _serviceRepository.Services.Where(p => p.CategoryId == 1).OrderBy(p => p.Name);
                 }
                 else
                 {
-                    services = _serviceRepository.Services.Where(p => p.Category.Name.Equals("Процедуры и услуги")).OrderBy(p => p.Name);
+                    services = _serviceRepository.Services.Where(p => p.CategoryId == 2).OrderBy(p => p.Name);
                 }
 
                 currentCategory = _category;
