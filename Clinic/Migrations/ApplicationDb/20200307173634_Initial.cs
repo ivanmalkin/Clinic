@@ -80,7 +80,7 @@ namespace Clinic.Migrations.ApplicationDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Doctors",
+                name: "Doctor",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -88,9 +88,9 @@ namespace Clinic.Migrations.ApplicationDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Doctors", x => x.Id);
+                    table.PrimaryKey("PK_Doctor", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Doctors_ApplicationUser_Id",
+                        name: "FK_Doctor_ApplicationUser_Id",
                         column: x => x.Id,
                         principalTable: "ApplicationUser",
                         principalColumn: "Id",
@@ -98,7 +98,7 @@ namespace Clinic.Migrations.ApplicationDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Patients",
+                name: "Patient",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -107,9 +107,9 @@ namespace Clinic.Migrations.ApplicationDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Patients", x => x.Id);
+                    table.PrimaryKey("PK_Patient", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Patients_ApplicationUser_Id",
+                        name: "FK_Patient_ApplicationUser_Id",
                         column: x => x.Id,
                         principalTable: "ApplicationUser",
                         principalColumn: "Id",
@@ -164,15 +164,15 @@ namespace Clinic.Migrations.ApplicationDb
                         principalColumn: "DiagnosisId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Appointments_Doctors_DoctorId",
+                        name: "FK_Appointments_Doctor_DoctorId",
                         column: x => x.DoctorId,
-                        principalTable: "Doctors",
+                        principalTable: "Doctor",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Appointments_Patients_PatientId",
+                        name: "FK_Appointments_Patient_PatientId",
                         column: x => x.PatientId,
-                        principalTable: "Patients",
+                        principalTable: "Patient",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -283,10 +283,10 @@ namespace Clinic.Migrations.ApplicationDb
                 name: "Diagnoses");
 
             migrationBuilder.DropTable(
-                name: "Doctors");
+                name: "Doctor");
 
             migrationBuilder.DropTable(
-                name: "Patients");
+                name: "Patient");
 
             migrationBuilder.DropTable(
                 name: "Categories");

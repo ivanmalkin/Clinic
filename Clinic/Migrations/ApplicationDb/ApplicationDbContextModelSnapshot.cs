@@ -90,7 +90,7 @@ namespace Clinic.Migrations.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Doctor");
                 });
 
             modelBuilder.Entity("Clinic.Identity.Patient", b =>
@@ -106,7 +106,7 @@ namespace Clinic.Migrations.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patient");
                 });
 
             modelBuilder.Entity("Clinic.Models.Appointment", b =>
