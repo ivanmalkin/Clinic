@@ -34,7 +34,7 @@ namespace Clinic.Controllers
             if (_shoppingCart.ShoppingCartItems.Count == 0)
             {
                 ModelState.AddModelError("", "Ваша корзина пуста, сначала добавьте услуги");
-                log.Error($"Ошибка создания заказа: корзина пуста (товаров {_shoppingCart.ShoppingCartItems.Count}");
+                log.Error($"Ошибка создания заказа: корзина пуста (услуг {_shoppingCart.ShoppingCartItems.Count}");
             }
 
             if (ModelState.IsValid)
