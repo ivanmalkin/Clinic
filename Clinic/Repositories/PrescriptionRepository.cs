@@ -38,7 +38,7 @@ namespace Clinic.Repositories
 
                 if (prescription != null && dbEntry != null)
                 {
-                    dbEntry.PrescriptionDate = DateTime.Now;
+                    dbEntry.PrescriptionDate = prescription.PrescriptionDate;
                     dbEntry.Description = prescription.Description;
                     dbEntry.Meds = prescription.Meds;
                     dbEntry.PatientId = prescription.PatientId;

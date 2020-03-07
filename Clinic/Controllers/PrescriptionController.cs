@@ -32,6 +32,7 @@ namespace Clinic.Controllers
         {
             if (ModelState.IsValid)
             {
+                prescription.PrescriptionDate = DateTime.Now;
                 repository.SavePrescription(prescription);
                 log.Info($"Диагноз {prescription.PrescriptionId} отредактирован или создан.");
                 TempData["message"] = $"{prescription.PrescriptionId} был сохранен";
