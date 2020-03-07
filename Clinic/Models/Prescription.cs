@@ -7,5 +7,6 @@ namespace Clinic.Models
         public int PrescriptionId { get; set; }
         public DateTime PrescriptionDate { get; set; }
         public string Description { get; set; }
+        public string Meds { get; set; }
     }
 }
