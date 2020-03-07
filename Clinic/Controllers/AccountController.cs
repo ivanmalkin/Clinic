@@ -69,6 +69,7 @@ namespace Clinic.Controllers
                     UserName = registerViewModel.UserName,
                     FirstName = registerViewModel.FirstName,
                     LastName = registerViewModel.LastName,
+                    MiddleName = registerViewModel.MiddleName,
                     PhoneNumber = registerViewModel.PhoneNumber,
                     Email = registerViewModel.Email
                 };
