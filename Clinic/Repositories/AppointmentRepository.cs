@@ -38,6 +38,7 @@ namespace Clinic.Repositories
                 appointment.AppointmentPlaced = DateTime.Now;
                 appointment.TotalSum = appointmentTotalSum;
                 appointment.PatientId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                appointment.DiagnosisId = 1;
 
                 _applicationDbContext.Appointments.Add(appointment);
                 _applicationDbContext.SaveChanges();

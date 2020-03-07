@@ -75,7 +75,7 @@ namespace Clinic.Controllers
                 };
 
                 var result = await _userManager.CreateAsync(user, registerViewModel.Password);
-                var roleResult = await _userManager.AddToRoleAsync(user, "User");
+                var roleResult = await _userManager.AddToRoleAsync(user, "Patient");
 
                 if (result.Succeeded && roleResult.Succeeded)
                 {

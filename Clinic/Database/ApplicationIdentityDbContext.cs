@@ -9,9 +9,5 @@ namespace Clinic.Database
         public ApplicationIdentityDbContext(DbContextOptions<ApplicationIdentityDbContext> options) : base(options)
         {
         }
-
-        public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<Patient> Patients { get; set; }
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

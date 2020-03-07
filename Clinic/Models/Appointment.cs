@@ -27,8 +27,6 @@ namespace Clinic.Models
         [ScaffoldColumn(false)]
         public DateTime AppointmentPlaced { get; set; }
 
-        public Patient Patient { get; set; }
-        public Doctor Doctor { get; set; }
         public Diagnosis Diagnosis { get; set; }
     }
 }
