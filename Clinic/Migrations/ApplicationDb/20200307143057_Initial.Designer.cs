@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clinic.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200307135532_Initial")]
+    [Migration("20200307143057_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,10 +30,6 @@ namespace Clinic.Migrations.ApplicationDb
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -84,8 +80,35 @@ namespace Clinic.Migrations.ApplicationDb
                     b.HasKey("Id");
 
                     b.ToTable("ApplicationUser");
+                });
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
+            modelBuilder.Entity("Clinic.Identity.Doctor", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Experience")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("Clinic.Identity.Patient", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("Clinic.Models.Appointment", b =>
@@ -272,35 +295,20 @@ namespace Clinic.Migrations.ApplicationDb
 
             modelBuilder.Entity("Clinic.Identity.Doctor", b =>
                 {
-                    b.HasBaseType("Clinic.Identity.ApplicationUser");
-
-                    b.Property<string>("DoctorId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Experience")
-                        .HasColumnType("int");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasDiscriminator().HasValue("Doctor");
+                    b.HasOne("Clinic.Identity.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Clinic.Identity.Patient", b =>
                 {
-                    b.HasBaseType("Clinic.Identity.ApplicationUser");
-
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PatientId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("PatientId");
-
-                    b.HasDiscriminator().HasValue("Patient");
+                    b.HasOne("Clinic.Identity.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Clinic.Models.Appointment", b =>
@@ -349,20 +357,6 @@ namespace Clinic.Migrations.ApplicationDb
                     b.HasOne("Clinic.Models.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId");
-                });
-
-            modelBuilder.Entity("Clinic.Identity.Doctor", b =>
-                {
-                    b.HasOne("Clinic.Identity.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("DoctorId");
-                });
-
-            modelBuilder.Entity("Clinic.Identity.Patient", b =>
-                {
-                    b.HasOne("Clinic.Identity.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("PatientId");
                 });
 #pragma warning restore 612, 618
         }

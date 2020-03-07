@@ -9,10 +9,10 @@ namespace Clinic.Identity
         Female
     }
 
-    public class Patient : ApplicationUser
+    public class Patient
     {
         [ForeignKey(nameof(ApplicationUser))]
-        public string PatientId { get; set; }
+        public string Id { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
 

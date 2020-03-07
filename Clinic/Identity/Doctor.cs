@@ -2,10 +2,10 @@
 
 namespace Clinic.Identity
 {
-    public class Doctor : ApplicationUser
+    public class Doctor
     {
         [ForeignKey(nameof(ApplicationUser))]
-        public string DoctorId { get; set; }
+        public string Id { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
 
