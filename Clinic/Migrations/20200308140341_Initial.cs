@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Clinic.Migrations
 {
@@ -44,7 +44,8 @@ namespace Clinic.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PrescriptionDate = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    Meds = table.Column<string>(nullable: true)
+                    Meds = table.Column<string>(nullable: true),
+                    PatientName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,6 +62,8 @@ namespace Clinic.Migrations
                     ShortDescription = table.Column<string>(nullable: true),
                     LongDescription = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(type: "decimal(20,2)", nullable: false),
+                    DoctorId = table.Column<string>(nullable: true),
+                    DoctorName = table.Column<string>(nullable: true),
                     ImageUrl = table.Column<string>(nullable: true),
                     ImageThumbnailUrl = table.Column<string>(nullable: true),
                     IsPrefferedService = table.Column<bool>(nullable: false),

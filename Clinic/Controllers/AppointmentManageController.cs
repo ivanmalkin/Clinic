@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Clinic.Interfaces;
 using Clinic.Models;
-using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -37,6 +37,8 @@ namespace Clinic.Repositories
         {
             if (service != null && service.ServiceId == 0)
             {
+                service.DoctorName = _applicationIdentityDbContext.Users
+                        .FirstOrDefault(d => d.Id == service.DoctorId).UserName;
                 _applicationDbContext.Services.Add(service);
             }
             else
