@@ -21,6 +21,12 @@
     </div>
 
     <div class="form-group">
+        <label asp-for="DoctorId">Врач</label>
+        <div><span asp-validation-for="DoctorId" class="text-danger"></span></div>
+        <input asp-for="DoctorId" class="form-control" />
+    </div>
+
+    <div class="form-group">
         <label asp-for="ShortDescription">Краткое описание</label>
         <div><span asp-validation-for="ShortDescription" class="text-danger"></span></div>
         <input asp-for="ShortDescription" class="form-control" />

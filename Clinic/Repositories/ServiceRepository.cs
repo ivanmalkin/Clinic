@@ -1,6 +1,8 @@
 ﻿using Clinic.Database;
+using Clinic.Identity;
 using Clinic.Interfaces;
 using Clinic.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +11,18 @@ namespace Clinic.Repositories
 {
     public class ServiceRepository : IServiceRepository
     {
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _applicationDbContext;
+        private readonly ApplicationIdentityDbContext _applicationIdentityDbContext;
 
-        public ServiceRepository(ApplicationDbContext applicationDbContext)
+        public ServiceRepository(
+            ApplicationDbContext applicationDbContext, 
+            ApplicationIdentityDbContext applicationIdentityDbContext,
+            UserManager<ApplicationUser> userManager)
         {
             _applicationDbContext = applicationDbContext;
+            _applicationIdentityDbContext = applicationIdentityDbContext;
+            _userManager = userManager;
         }
 
         public IEnumerable<Service> Services => _applicationDbContext.Services.ToList();
@@ -37,6 +46,15 @@ namespace Clinic.Repositories
                 if (service != null && dbEntry != null)
                 {
                     dbEntry.Name = service.Name;
+                    dbEntry.ShortDescription = service.ShortDescription;
+                    dbEntry.LongDescription = service.LongDescription;
+                    dbEntry.Price = service.Price;                    
+                    dbEntry.DoctorId = service.DoctorId;
+                    dbEntry.DoctorName = _applicationIdentityDbContext.Users
+                        .FirstOrDefault(d => d.Id == service.DoctorId).UserName;
+                    dbEntry.ImageUrl = service.ImageUrl;
+                    dbEntry.ImageThumbnailUrl = service.ImageThumbnailUrl;
+                    dbEntry.IsPrefferedService = service.IsPrefferedService;
                     dbEntry.CategoryId = service.CategoryId;
                 }
             }

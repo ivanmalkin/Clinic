@@ -12,6 +12,9 @@ namespace Clinic.Models
         [Column(TypeName = "decimal(20,2)")]
         public decimal Price { get; set; }
 
+        public string DoctorId { get; set; }
+        public string DoctorName { get; set; }
+
         public string ImageUrl { get; set; }
         public string ImageThumbnailUrl { get; set; }
         public bool IsPrefferedService { get; set; }

@@ -8,6 +8,6 @@ namespace Clinic.Models
         public DateTime PrescriptionDate { get; set; }
         public string Description { get; set; }
         public string Meds { get; set; }
-        public string PatientId { get; set; }
+        public string PatientName { get; set; }
     }
 }
