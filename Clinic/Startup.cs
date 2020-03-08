@@ -68,16 +68,6 @@ namespace Clinic
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                   name: "servicedetails",
-                   template: "Service/Details/{serviceId?}",
-                   defaults: new { Controller = "Service", action = "Details" });
-
-                routes.MapRoute(
-                    name: "categoryfilter",
-                    template: "Service/{action}/{category?}",
-                    defaults: new { Controller = "Service", action = "List" });
-
-                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{Id?}");
             });

@@ -11,6 +11,7 @@
         <th class="text-right">ID</th>
         <th>Пациент</th>
         <th>Дата</th>
+        <th>Диагноз</th>
         <th class="text-right">Цена</th>
         <th class="text-center">Действия</th>
     </tr>
@@ -20,11 +21,12 @@
             <td class="text-right">@item.AppointmentId</td>
             <td>@item.PatientId</td>
             <td>@item.AppointmentPlaced</td>
+            <td>@item.DiagnosisId</td>
             <td class="text-right">@item.TotalSum.ToString("c")</td>
             <td class="text-center">
                 <form asp-action="Delete" method="post">
                     <a asp-action="Edit" class="btn btn-sm btn-warning" asp-route-appointmentId="@item.AppointmentId">Редактировать</a>
-                    <input type="hidden" name="ServiceId" value="@item.AppointmentId" />
+                    <input type="hidden" name="AppointmentId" value="@item.AppointmentId" />
                 </form>
             </td>
         </tr>

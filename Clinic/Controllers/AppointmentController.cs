@@ -9,13 +9,13 @@ namespace Clinic.Controllers
 {
     public class AppointmentController : Controller
     {
-        private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IAppointmentRepository repository;
         private readonly ShoppingCart _shoppingCart;
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public AppointmentController(IAppointmentRepository appointmentRepository, ShoppingCart shoppingCart)
         {
-            _appointmentRepository = appointmentRepository;
+            repository = appointmentRepository;
             _shoppingCart = shoppingCart;
         }
 
@@ -40,7 +40,7 @@ namespace Clinic.Controllers
 
             if (ModelState.IsValid)
             {
-                _appointmentRepository.CreateAppointment(appointment);
+                repository.CreateAppointment(appointment);
                 _shoppingCart.ClearCart();
 
                 return RedirectToAction("CheckoutComplete");
@@ -54,29 +54,6 @@ namespace Clinic.Controllers
             ViewBag.CheckoutCompleteMessage = "Спасибо за заказ";
 
             return View();
-        }
-
-        [Authorize(Roles = "Admin, Doctor")]
-        public ViewResult List() => View(_appointmentRepository.Appointments);
-
-        [Authorize(Roles = "Admin, Doctor")]
-        public ViewResult Edit(int appointmentId) => View(_appointmentRepository.Appointments.FirstOrDefault(p => p.AppointmentId == appointmentId));
-
-        [Authorize(Roles = "Admin, Doctor")]
-        [HttpPost]
-        public IActionResult Edit(Appointment appointment)
-        {
-            if (ModelState.IsValid)
-            {
-                _appointmentRepository.SaveAppointment(appointment);
-                log.Info($"Заявка {appointment.AppointmentId} отредактирован или создан.");
-                TempData["message"] = $"{appointment.AppointmentId} был сохранен";
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return View(appointment);
-            }
         }
     }
 }

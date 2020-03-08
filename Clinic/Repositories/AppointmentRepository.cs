@@ -11,7 +11,7 @@ namespace Clinic.Repositories
 {
     public class AppointmentRepository : IAppointmentRepository
     {
-        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly ApplicationDbContext applicationDbContext;
         private readonly ShoppingCart _shoppingCart;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -20,12 +20,12 @@ namespace Clinic.Repositories
             ShoppingCart shoppingCart,
             IHttpContextAccessor httpContextAccessor)
         {
-            _applicationDbContext = applicationDbContext;
+            this.applicationDbContext = applicationDbContext;
             _shoppingCart = shoppingCart;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public IEnumerable<Appointment> Appointments => _applicationDbContext.Appointments.ToList();
+        public IEnumerable<Appointment> Appointments => applicationDbContext.Appointments.ToList();
 
         public IEnumerable<Appointment> GetAllAppointments()
         {
@@ -49,8 +49,8 @@ namespace Clinic.Repositories
                 appointment.PatientId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 appointment.DiagnosisId = 3;
 
-                _applicationDbContext.Appointments.Add(appointment);
-                _applicationDbContext.SaveChanges();
+                applicationDbContext.Appointments.Add(appointment);
+                applicationDbContext.SaveChanges();
 
                 foreach (var shoppingCartItem in shoppingCartItems)
                 {
@@ -62,10 +62,10 @@ namespace Clinic.Repositories
                         Price = shoppingCartItem.Service.Price
                     };
 
-                    _applicationDbContext.AppointmentLines.Add(appointmentLine);
+                    applicationDbContext.AppointmentLines.Add(appointmentLine);
                 }
 
-                _applicationDbContext.SaveChanges();
+                applicationDbContext.SaveChanges();
             }
         }
 
@@ -73,11 +73,11 @@ namespace Clinic.Repositories
         {
             if (appointment != null && appointment.AppointmentId == 0)
             {
-                _applicationDbContext.Appointments.Add(appointment);
+                applicationDbContext.Appointments.Add(appointment);
             }
             else
             {
-                Appointment dbEntry = _applicationDbContext.Appointments.FirstOrDefault(d => d.AppointmentId == appointment.AppointmentId);
+                Appointment dbEntry = applicationDbContext.Appointments.FirstOrDefault(d => d.AppointmentId == appointment.AppointmentId);
 
                 if (appointment != null && dbEntry != null)
                 {
@@ -85,7 +85,7 @@ namespace Clinic.Repositories
                 }
             }
 
-            _applicationDbContext.SaveChanges();
+            applicationDbContext.SaveChanges();
         }
     }
 }
