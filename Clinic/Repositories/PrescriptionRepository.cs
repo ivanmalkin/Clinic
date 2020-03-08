@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Clinic.Database;
+﻿using Clinic.Database;
 using Clinic.Interfaces;
 using Clinic.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Clinic.Repositories
 {

@@ -3,6 +3,7 @@ using Clinic.Models;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace Clinic.Controllers
 {
@@ -53,6 +54,29 @@ namespace Clinic.Controllers
             ViewBag.CheckoutCompleteMessage = "Спасибо за заказ";
 
             return View();
+        }
+
+        [Authorize(Roles = "Admin, Doctor")]
+        public ViewResult List() => View(_appointmentRepository.Appointments);
+
+        [Authorize(Roles = "Admin, Doctor")]
+        public ViewResult Edit(int appointmentId) => View(_appointmentRepository.Appointments.FirstOrDefault(p => p.AppointmentId == appointmentId));
+
+        [Authorize(Roles = "Admin, Doctor")]
+        [HttpPost]
+        public IActionResult Edit(Appointment appointment)
+        {
+            if (ModelState.IsValid)
+            {
+                _appointmentRepository.SaveAppointment(appointment);
+                log.Info($"Заявка {appointment.AppointmentId} отредактирован или создан.");
+                TempData["message"] = $"{appointment.AppointmentId} был сохранен";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(appointment);
+            }
         }
     }
 }

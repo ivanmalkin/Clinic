@@ -3,6 +3,8 @@ using Clinic.Interfaces;
 using Clinic.Models;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 
 namespace Clinic.Repositories
@@ -23,6 +25,13 @@ namespace Clinic.Repositories
             _httpContextAccessor = httpContextAccessor;
         }
 
+        public IEnumerable<Appointment> Appointments => _applicationDbContext.Appointments.ToList();
+
+        public IEnumerable<Appointment> GetAllAppointments()
+        {
+            return Appointments.OrderBy(p => p.AppointmentId).ToList();
+        }
+
         public void CreateAppointment(Appointment appointment)
         {
             if (appointment != null)
@@ -38,7 +47,7 @@ namespace Clinic.Repositories
                 appointment.AppointmentPlaced = DateTime.Now;
                 appointment.TotalSum = appointmentTotalSum;
                 appointment.PatientId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                appointment.DiagnosisId = 1;
+                appointment.DiagnosisId = 3;
 
                 _applicationDbContext.Appointments.Add(appointment);
                 _applicationDbContext.SaveChanges();
@@ -58,6 +67,25 @@ namespace Clinic.Repositories
 
                 _applicationDbContext.SaveChanges();
             }
+        }
+
+        public void SaveAppointment(Appointment appointment)
+        {
+            if (appointment != null && appointment.AppointmentId == 0)
+            {
+                _applicationDbContext.Appointments.Add(appointment);
+            }
+            else
+            {
+                Appointment dbEntry = _applicationDbContext.Appointments.FirstOrDefault(d => d.AppointmentId == appointment.AppointmentId);
+
+                if (appointment != null && dbEntry != null)
+                {
+                    dbEntry.Diagnosis = appointment.Diagnosis;
+                }
+            }
+
+            _applicationDbContext.SaveChanges();
         }
     }
 }

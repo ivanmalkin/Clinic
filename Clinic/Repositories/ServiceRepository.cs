@@ -16,7 +16,7 @@ namespace Clinic.Repositories
         private readonly ApplicationIdentityDbContext _applicationIdentityDbContext;
 
         public ServiceRepository(
-            ApplicationDbContext applicationDbContext, 
+            ApplicationDbContext applicationDbContext,
             ApplicationIdentityDbContext applicationIdentityDbContext,
             UserManager<ApplicationUser> userManager)
         {
@@ -48,7 +48,7 @@ namespace Clinic.Repositories
                     dbEntry.Name = service.Name;
                     dbEntry.ShortDescription = service.ShortDescription;
                     dbEntry.LongDescription = service.LongDescription;
-                    dbEntry.Price = service.Price;                    
+                    dbEntry.Price = service.Price;
                     dbEntry.DoctorId = service.DoctorId;
                     dbEntry.DoctorName = _applicationIdentityDbContext.Users
                         .FirstOrDefault(d => d.Id == service.DoctorId).UserName;

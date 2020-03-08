@@ -80,7 +80,7 @@ namespace Clinic
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{Id?}");
-            });           
+            });
         }
     }
 }
