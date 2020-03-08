@@ -3,7 +3,6 @@ using Clinic.Models;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace Clinic.Controllers
 {

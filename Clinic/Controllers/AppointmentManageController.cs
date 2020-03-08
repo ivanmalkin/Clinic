@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using Clinic.Interfaces;
+﻿using Clinic.Interfaces;
 using Clinic.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace Clinic.Controllers
 {

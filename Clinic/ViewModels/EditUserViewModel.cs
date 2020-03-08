@@ -22,7 +22,7 @@ namespace Clinic.ViewModels
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Введите свое отчество")]
-        [Display(Name = "Имя")]
+        [Display(Name = "Отчество")]
         [StringLength(25)]
         public string MiddleName { get; set; }
 

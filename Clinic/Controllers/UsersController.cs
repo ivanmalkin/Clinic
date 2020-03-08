@@ -36,6 +36,7 @@ namespace Clinic.Controllers
                     UserName = model.UserName,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
+                    MiddleName = model.MiddleName,
                     PhoneNumber = model.PhoneNumber,
                     Email = model.Email
                 };
@@ -80,6 +81,7 @@ namespace Clinic.Controllers
                 UserName = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                MiddleName = user.MiddleName,
                 PhoneNumber = user.PhoneNumber,
                 Email = user.Email
             };
@@ -100,6 +102,7 @@ namespace Clinic.Controllers
                     user.UserName = model.UserName;
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
+                    user.MiddleName = model.MiddleName;
                     user.PhoneNumber = model.PhoneNumber;
                     user.Email = model.Email;
 
