@@ -7,6 +7,10 @@
 {
     <form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm" method="post" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
+            @if (User.IsInRole("Patient"))
+            {
+                <li><a id="myAppointmentsLink" asp-controller="AppointmentManage" asp-action="MyAppointments"> Мои заявки </a></li>              
+            }
             @if (User.IsInRole("Admin") || User.IsInRole("Doctor"))
             {
                 <li class="dropdown">
