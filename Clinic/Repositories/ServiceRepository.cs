@@ -11,18 +11,15 @@ namespace Clinic.Repositories
 {
     public class ServiceRepository : IServiceRepository
     {
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly ApplicationIdentityDbContext _applicationIdentityDbContext;
 
         public ServiceRepository(
             ApplicationDbContext applicationDbContext,
-            ApplicationIdentityDbContext applicationIdentityDbContext,
-            UserManager<ApplicationUser> userManager)
+            ApplicationIdentityDbContext applicationIdentityDbContext)
         {
             _applicationDbContext = applicationDbContext;
             _applicationIdentityDbContext = applicationIdentityDbContext;
-            _userManager = userManager;
         }
 
         public IEnumerable<Service> Services => _applicationDbContext.Services.ToList();
