@@ -10,7 +10,7 @@ namespace Clinic.Controllers
 {
     public class AppointmentManageController : Controller
     {
-        private IAppointmentRepository repository;
+        private readonly IAppointmentRepository repository;
         private readonly IHttpContextAccessor httpContextAccessor;
 
         public AppointmentManageController(IAppointmentRepository repo, IHttpContextAccessor accessor)
